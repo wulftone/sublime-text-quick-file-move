@@ -14,7 +14,7 @@ class QuickFileMoveCommand(sublime_plugin.WindowCommand):
     def run(self):
         view = self.window.active_view()
         filename = view.file_name()
-        self.window.show_input_panel("Rename:", filename, lambda user_input: self.rename(view, filename, user_input), None, None)
+        self.window.show_input_panel("Move/Rename:", filename, lambda user_input: self.rename(view, filename, user_input), None, None)
 
     def rename(self, view, old_filename, new_filename):
         if not self.validateFileName(view, old_filename, new_filename):
