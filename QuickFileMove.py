@@ -42,7 +42,13 @@ class QuickFileMoveCommand(sublime_plugin.WindowCommand):
 
     def fileOperations(self, window, old_file, new_file):
         window.run_command("close")
-        shutil.move(old_file, new_file)
+        try:
+            shutil.move(old_file, new_file)
+        except IOError, e:
+            if e.errno == 2: # No such file or directory (on new_file)
+                new_dir = os.path.dirname(new_file)
+                os.makedirs(new_dir);
+                shutil.move(old_file, new_file)
         window.open_file(new_file)
         if old_file.endswith(".py"):
             os.remove(old_file + "c")
