@@ -41,7 +41,6 @@ class QuickFileMoveCommand(sublime_plugin.WindowCommand):
         return True
 
     def fileOperations(self, window, old_file, new_file):
-        window.run_command("close")
         try:
             shutil.move(old_file, new_file)
         except IOError, e:
@@ -49,9 +48,19 @@ class QuickFileMoveCommand(sublime_plugin.WindowCommand):
                 new_dir = os.path.dirname(new_file)
                 os.makedirs(new_dir);
                 shutil.move(old_file, new_file)
-        window.open_file(new_file)
+            else:
+                raise e
+        except Exception, e:
+            raise e
+
         if old_file.endswith(".py"):
             os.remove(old_file + "c")
+
+        if os.access(new_file, os.R_OK): # Can read new file
+            window.run_command("close")
+            window.open_file(new_file)
+        else:
+            sublime.error_message("Error: Can not read new file: " + new_file)
 
     def setSelection(self, old_view, new_view):
         new_view.sel().clear()
