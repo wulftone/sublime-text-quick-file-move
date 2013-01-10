@@ -2,6 +2,13 @@
 
 A simple ST2 plugin to help you move or rename your files
 
+## You don't need this plugin!
+
+This functionality is available via the shortcut command "side\_bar\_move" in the [SideBarEnhancements](https://github.com/titoBouzout/SideBarEnhancements) plugin.
+
+You can put it in your User Key Bindings file like so:
+  { "keys": ["ctrl+alt+r"], "command": "side\_bar\_move" }
+
 ###Usage
 
 Press `ctrl+shift+r` then enter your new file path or filename!
