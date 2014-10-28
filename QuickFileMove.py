@@ -54,7 +54,10 @@ class QuickFileMoveCommand(sublime_plugin.WindowCommand):
             raise e
 
         if old_file.endswith(".py"):
-            os.remove(old_file + "c")
+            try:
+                os.remove(old_file + "c")
+            except:
+                pass
 
         if os.access(new_file, os.R_OK):  # Can read new file
             window.run_command("close")
